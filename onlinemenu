@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Your Lagnaa Experience</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .reservation-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .reservation-title {
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 28px;
+            color: #000;
+        }
+
+        .reservation-subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .order-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .option-card {
+            flex: 1;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            border-color: #e78c2a;
+        }
+
+        .option-card.active {
+            border-color: #e78c2a;
+            background-color: rgba(231, 140, 42, 0.05);
+        }
+
+        .option-radio {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .option-card.active .option-radio {
+            border-color: #e78c2a;
+        }
+
+        .option-card.active .option-radio::after {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #e78c2a;
+        }
+
+        .option-label {
+            font-size: 16px;
+            color: #333;
+            flex-grow: 1;
+        }
+
+        .option-icon {
+            width: 24px;
+            height: 24px;
+            color: #888;
+        }
+
+        .recent-search {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .location-container {
+            display: flex;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .location-info {
+            flex-grow: 1;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-icon {
+            margin-right: 10px;
+            color: #666;
+        }
+
+        .location-address {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .change-location {
+            background-color: #e78c2a;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .change-location:hover {
+            background-color: #d17b1f;
+        }
+
+        .order-button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .order-now-button {
+            background-color: #e78c2a;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-now-button:hover {
+            background-color: #d17b1f;
+        }
+
+        .cart-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .modal-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-confirm {
+            background-color: #e78c2a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="reservation-container">
+        <h1 class="reservation-title">Reserve Your Lagnaa Experience</h1>
+        <p class="reservation-subtitle">For 8 pax and above, please call the restaurant for menu planning.</p>
+
+        <div class="order-options">
+            <div class="option-card" data-option="pickup">
+                <div class="option-radio"></div>
+                <span class="option-label">Pickup</span>
+                <svg class="option-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 5.523-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0s10 4.477 10 10z"></path>
+                    <rect x="16" y="6" width="6" height="12" rx="2"></rect>
+                    <path d="M12 10h4"></path>
+                </svg>
+            </div>
+
+            <div class="option-card active" data-option="delivery">
+                <div class="option-radio"></div>
+                <span class="option-label">Home Delivery</span>
+                <svg class="option-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="3" width="15" height="13"></rect>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+            </div>
+
+            <div class="option-card" data-option="dining">
+                <div class="option-radio"></div>
+                <span class="option-label">Dining Barefoot</span>
+                <svg class="option-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <line x1="6" y1="10" x2="18" y2="10"></line>
+                    <line x1="6" y1="14" x2="18" y2="14"></line>
+                </svg>
+            </div>
+        </div>
+
+        <div class="recent-search">Recent Search</div>
+
+        <div class="location-container">
+            <div class="location-info">
+                <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+                    <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+                <div class="location-address">
+                    Lagnaa Barefoot Dining, 6 Upper Dickson Road, Singapore 407266
+                </div>
+            </div>
+            <button class="change-location" id="changeLocationBtn">Change Location</button>
+        </div>
+
+        <div class="order-button-container">
+            <button class="order-now-button" id="orderNowBtn">
+                Order Now
+                <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Location Change Modal -->
+    <div class="modal" id="locationModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Change Location</h2>
+            <input type="text" class="modal-input" id="locationInput" placeholder="Enter new address">
+            <div class="modal-buttons">
+                <button class="modal-button modal-cancel" id="cancelLocationBtn">Cancel</button>
+                <button class="modal-button modal-confirm" id="confirmLocationBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Order Confirmation</h2>
+            <p id="orderDetails">Your order for <span id="orderType">Home Delivery</span> at <span id="orderAddress">Lagnaa Barefoot Dining, 6 Upper Dickson Road, Singapore 407266</span> has been received.</p>
+            <div class="modal-buttons">
+                <button class="modal-button modal-confirm" id="closeOrderModalBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Option selection functionality
+            const optionCards = document.querySelectorAll('.option-card');
+            optionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    optionCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Location change modal functionality
+            const changeLocationBtn = document.getElementById('changeLocationBtn');
+            const locationModal = document.getElementById('locationModal');
+            const cancelLocationBtn = document.getElementById('cancelLocationBtn');
+            const confirmLocationBtn = document.getElementById('confirmLocationBtn');
+            const locationInput = document.getElementById('locationInput');
+            const locationAddress = document.querySelector('.location-address');
+
+            changeLocationBtn.addEventListener('click', function() {
+                locationModal.style.display = 'flex';
+            });
+
+            cancelLocationBtn.addEventListener('click', function() {
+                locationModal.style.display = 'none';
+                locationInput.value = '';
+            });
+
+            confirmLocationBtn.addEventListener('click', function() {
+                if (locationInput.value.trim() !== '') {
+                    locationAddress.textContent = locationInput.value;
+                    locationModal.style.display = 'none';
+                    locationInput.value = '';
+                }
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === locationModal) {
+                    locationModal.style.display = 'none';
+                    locationInput.value = '';
+                }
+                if (event.target === orderModal) {
+                    orderModal.style.display = 'none';
+                }
+            });
+
+            // Order now button functionality
+            const orderNowBtn = document.getElementById('orderNowBtn');
+            const orderModal = document.getElementById('orderModal');
+            const closeOrderModalBtn = document.getElementById('closeOrderModalBtn');
+            const orderType = document.getElementById('orderType');
+            const orderAddress = document.getElementById('orderAddress');
+
+            orderNowBtn.addEventListener('click', function() {
+                // Get selected option
+                const selectedOption = document.querySelector('.option-card.active .option-label').textContent;
+                const currentAddress = locationAddress.textContent;
+                
+                // Update modal content
+                orderType.textContent = selectedOption;
+                orderAddress.textContent = currentAddress;
+                
+                // Show modal
+                orderModal.style.display = 'flex';
+            });
+
+            closeOrderModalBtn.addEventListener('click', function() {
+                orderModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
