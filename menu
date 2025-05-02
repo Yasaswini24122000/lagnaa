@@ -1,0 +1,36 @@
+            // Clear existing page numbers (keep arrows)
+            pagination.innerHTML = '';
+            pagination.appendChild(prevPage);
+            
+            // Add page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement('div');
+                pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                pageItem.textContent = i.toString().padStart(2, '0');
+                pageItem.addEventListener('click', () => {
+                    currentPage = i;
+                    renderMenuItems();
+                    updatePagination();
+                });
+                pagination.appendChild(pageItem);
+            }
+            
+            pagination.appendChild(nextPage);
+            
+            // Update arrow states
+            prevPage.classList.toggle('disabled', currentPage === 1);
+            nextPage.classList.toggle('disabled', currentPage === totalPages);
+        }
+
+        // Show cart notification
+        function showCartNotification(message) {
+            cartNotification.textContent = message;
+            cartNotification.style.display = 'block';
+            
+            setTimeout(() => {
+                cartNotification.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
