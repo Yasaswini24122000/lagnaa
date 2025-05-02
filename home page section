@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f3e7;
+        }
+
+        .menu-header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .menu-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #000;
+        }
+
+        .menu-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .menu-title h2 {
+            font-size: 32px;
+            margin: 0;
+            color: #000;
+        }
+
+        .menu-title h3 {
+            font-size: 28px;
+            margin: 0;
+            color: #000;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab.active {
+            background-color: #6a913d;
+            color: white;
+            position: relative;
+        }
+
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #6a913d;
+        }
+
+        .menu-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .menu-content.active {
+            display: block;
+        }
+
+        .menu-content h2 {
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            width: 48%;
+            margin-bottom: 20px;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details h3 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+
+        .item-details p {
+            margin: 0;
+            color: #e67e22;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .item-description {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-tabs {
+                gap: 10px;
+            }
+            
+            .menu-item {
+                width: 100%;
+            }
+            
+            .tab {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-header">
+        <h1>MENU</h1>
+    </div>
+
+    <div class="menu-title">
+        <h2>Choose your combo</h2>
+        <h3>& order now!</h3>
+    </div>
+
+    <div class="menu-tabs">
+        <div class="tab active" data-tab="drinks">DRINKS MENU</div>
+        <div class="tab" data-tab="michelin">MICHELIN SET MEAL</div>
+        <div class="tab" data-tab="fullmoon">FULL MOON PARTY</div>
+        <div class="tab" data-tab="alacarte">ALA CARTE MENU</div>
+        <div class="tab" data-tab="single">SINGLE MEAL (NON-VEGETARIAN)</div>
+    </div>
+
+    <!-- Drinks Menu Content -->
+    <div class="menu-content active" id="drinks">
+        <h2>Drinks Menu</h2>
+        <div class="menu-items">
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Mint Lassi">
+                </div>
+                <div class="item-details">
+                    <h3>Mint Lassi</h3>
+                    <p>$8.00</p>
+                    <div class="item-description">Refreshing yogurt drink with fresh mint leaves</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Mango Lassi">
+                </div>
+                <div class="item-details">
+                    <h3>Mango Lassi</h3>
+                    <p>$8.00</p>
+                    <div class="item-description">Sweet yogurt drink with ripe mango pulp</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Masala Chai">
+                </div>
+                <div class="item-details">
+                    <h3>Masala Chai</h3>
+                    <p>$5.00</p>
+                    <div class="item-description">Spiced tea with milk and aromatic spices</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1563212034-a6a0b7c26743?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Fresh Lime Soda">
+                </div>
+                <div class="item-details">
+                    <h3>Fresh Lime Soda</h3>
+                    <p>$6.00</p>
+                    <div class="item-description">Sparkling soda with fresh lime juice</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Michelin Set Meal Content -->
+    <div class="menu-content" id="michelin">
+        <h2>Michelin Set Meal</h2>
+        <div class="menu-items">
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Chef's Special Thali">
+                </div>
+                <div class="item-details">
+                    <h3>Chef's Special Thali</h3>
+                    <p>$25.00</p>
+                    <div class="item-description">Assorted dishes including curry, dal, rice, bread, salad, and dessert</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Vegetarian Delight">
+                </div>
+                <div class="item-details">
+                    <h3>Vegetarian Delight</h3>
+                    <p>$22.00</p>
+                    <div class="item-description">Seasonal vegetable curry, paneer dish, dal, rice, and naan</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Royal Non-Veg Feast">
+                </div>
+                <div class="item-details">
+                    <h3>Royal Non-Veg Feast</h3>
+                    <p>$28.00</p>
+                    <div class="item-description">Butter chicken, lamb curry, biryani, naan, and dessert</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Moon Party Content -->
+    <div class="menu-content" id="fullmoon">
+        <h2>Full Moon Party</h2>
+        <div class="menu-items">
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Moonlight Platter">
+                </div>
+                <div class="item-details">
+                    <h3>Moonlight Platter</h3>
+                    <p>$35.00</p>
+                    <div class="item-description">Sharing platter with assorted appetizers, mains, and desserts</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Starry Night Special">
+                </div>
+                <div class="item-details">
+                    <h3>Starry Night Special</h3>
+                    <p>$40.00</p>
+                    <div class="item-description">Premium selection of dishes with sparkling wine</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Lunar BBQ Grill">
+                </div>
+                <div class="item-details">
+                    <h3>Lunar BBQ Grill</h3>
+                    <p>$32.00</p>
+                    <div class="item-description">Assorted grilled meats and vegetables with special sauces</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- A La Carte Menu Content -->
+    <div class="menu-content" id="alacarte">
+        <h2>A La Carte Menu</h2>
+        <div class="menu-items">
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Butter Chicken">
+                </div>
+                <div class="item-details">
+                    <h3>Butter Chicken</h3>
+                    <p>$18.00</p>
+                    <div class="item-description">Tandoori chicken in rich tomato and butter sauce</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1631898034272-5b12c83d0a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Palak Paneer">
+                </div>
+                <div class="item-details">
+                    <h3>Palak Paneer</h3>
+                    <p>$16.00</p>
+                    <div class="item-description">Cottage cheese in creamy spinach gravy</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Lamb Rogan Josh">
+                </div>
+                <div class="item-details">
+                    <h3>Lamb Rogan Josh</h3>
+                    <p>$22.00</p>
+                    <div class="item-description">Tender lamb in aromatic Kashmiri curry</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1633945274309-2c16cf9687a4?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Vegetable Biryani">
+                </div>
+                <div class="item-details">
+                    <h3>Vegetable Biryani</h3>
+                    <p>$15.00</p>
+                    <div class="item-description">Fragrant rice cooked with mixed vegetables and spices</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Single Meal (Non-Vegetarian) Content -->
+    <div class="menu-content" id="single">
+        <h2>Single Meal (Non-Vegetarian)</h2>
+        <div class="menu-items">
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Chicken Tikka Masala">
+                </div>
+                <div class="item-details">
+                    <h3>Chicken Tikka Masala</h3>
+                    <p>$17.00</p>
+                    <div class="item-description">Grilled chicken chunks in spiced curry sauce</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Fish Curry">
+                </div>
+                <div class="item-details">
+                    <h3>Fish Curry</h3>
+                    <p>$19.00</p>
+                    <div class="item-description">Fresh fish in coconut based curry</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Mutton Korma">
+                </div>
+                <div class="item-details">
+                    <h3>Mutton Korma</h3>
+                    <p>$21.00</p>
+                    <div class="item-description">Tender mutton in rich, creamy sauce with nuts</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-image">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100" alt="Prawn Masala">
+                </div>
+                <div class="item-details">
+                    <h3>Prawn Masala</h3>
+                    <p>$23.00</p>
+                    <div class="item-description">Juicy prawns in spicy onion-tomato gravy</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const menuContents = document.querySelectorAll('.menu-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    menuContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
