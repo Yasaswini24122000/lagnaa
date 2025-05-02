@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        .header {
+            background-color: #3e2a20;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
+        }
+
+        .cart-tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            margin-top: 20px;
+        }
+
+        .tab {
+            padding: 15px 10px;
+            margin: 0 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #5465ca;
+            font-weight: bold;
+        }
+
+        .tab.inactive {
+            color: #c94064;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #5465ca;
+        }
+
+        .empty-cart-container {
+            background-color: #f0f8f0;
+            border-radius: 8px;
+            padding: 50px 20px;
+            margin: 20px 10px;
+            text-align: center;
+        }
+
+        .cart-icon {
+            background-color: #4caf50;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .cart-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .empty-cart-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .empty-cart-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .shop-now-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .shop-now-button:hover {
+            background-color: #45a049;
+        }
+        
+        /* Added styles for the favorites tab content */
+        .favorites-content {
+            display: none;
+            background-color: #fff8f8;
+            border-radius: 8px;
+            padding: 50px 20px;
+            margin: 20px 10px;
+            text-align: center;
+        }
+        
+        .heart-icon {
+            background-color: #ff6b6b;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Shopping Cart</h1>
+        <a href="#" class="back-button" id="backButton">← Back to Menu</a>
+    </div>
+
+    <div class="cart-tabs">
+        <div class="tab active" id="cartTab">Your Cart</div>
+        <div class="tab inactive" id="favoritesTab">Your Favorites</div>
+    </div>
+
+    <div class="empty-cart-container" id="cartContent">
+        <div class="cart-icon">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="#ffffff">
+                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+        </div>
+        <h2 class="empty-cart-title">Your cart is empty</h2>
+        <p class="empty-cart-text">No products found. Please select some products.</p>
+        <button class="shop-now-button" id="shopNowButton">Shop Now</button>
+    </div>
+    
+    <div class="favorites-content" id="favoritesContent">
+        <div class="heart-icon">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="#ffffff">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+        </div>
+        <h2 class="empty-cart-title">Your favorites list is empty</h2>
+        <p class="empty-cart-text">No favorite products found. Start adding some!</p>
+        <button class="shop-now-button" id="browseProductsButton">Browse Products</button>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const cartTab = document.getElementById('cartTab');
+        const favoritesTab = document.getElementById('favoritesTab');
+        const cartContent = document.getElementById('cartContent');
+        const favoritesContent = document.getElementById('favoritesContent');
+        
+        cartTab.addEventListener('click', () => {
+            cartTab.classList.remove('inactive');
+            cartTab.classList.add('active');
+            favoritesTab.classList.remove('active');
+            favoritesTab.classList.add('inactive');
+            cartContent.style.display = 'block';
+            favoritesContent.style.display = 'none';
+        });
+        
+        favoritesTab.addEventListener('click', () => {
+            favoritesTab.classList.remove('inactive');
+            favoritesTab.classList.add('active');
+            cartTab.classList.remove('active');
+            cartTab.classList.add('inactive');
+            favoritesContent.style.display = 'block';
+            cartContent.style.display = 'none';
+        });
+        
+        // Back button functionality
+        document.getElementById('backButton').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Navigating back to the menu...');
+            // In a real application, you would use:
+            // window.location.href = 'menu.html';
+        });
+        
+        // Shop Now button functionality
+        document.getElementById('shopNowButton').addEventListener('click', () => {
+            alert('Redirecting to the shop page...');
+            // In a real application, you would use:
+            // window.location.href = 'products.html';
+        });
+        
+        // Browse Products button functionality
+        document.getElementById('browseProductsButton').addEventListener('click', () => {
+            alert('Redirecting to the products page...');
+            // In a real application, you would use:
+            // window.location.href = 'products.html';
+        });
+    </script>
+</body>
+</html>
